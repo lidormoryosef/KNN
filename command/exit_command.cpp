@@ -8,10 +8,10 @@ void exit_command::execute() {
 
 }
 
-exit_command::exit_command(string des, DefaultIO* dio) {
+exit_command::exit_command(string des, DefaultIO* dio,global_data* data) {
     this->description=std::move(des);
     this->dio=dio;
-
+    this->data = data;
 }
 
 bool exit_command::getFlag() {

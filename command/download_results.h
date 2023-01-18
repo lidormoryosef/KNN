@@ -8,7 +8,7 @@
 #include "Command.h"
 class download_results: public Command{
 public:
-    download_results(string des, DefaultIO* dio);
+    download_results(string des, DefaultIO* dio,global_data* data);
     void execute () override;
     bool getFlag() override;
 };

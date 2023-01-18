@@ -8,7 +8,7 @@
 #include "Command.h"
 class display_result: public Command{
 public:
-    display_result(string des, DefaultIO* dio);
+    display_result(string des, DefaultIO* dio,global_data *data);
     void execute () override;
     bool getFlag() override;
 };

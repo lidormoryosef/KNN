@@ -8,7 +8,7 @@
 #include "Command.h"
 class classify_data: public Command{
 public:
-    classify_data(string des, DefaultIO* dio);
+    classify_data(string des, DefaultIO* dio,global_data *data);
     void execute () override;
     bool getFlag() override;
 };

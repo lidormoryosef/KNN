@@ -13,7 +13,7 @@ private:
     ClassifiedArray classifiedArray;
     ClassifiedArray unClassifiedArray;
 public:
-   upload_unclassified(string des,DefaultIO* dio);
+   upload_unclassified(string des,DefaultIO* dio,global_data* data);
     void execute () override;
     bool getFlag() override;
     ClassifiedArray populateArrays(bool check);

@@ -8,11 +8,11 @@
 
 void algorithm_settings::execute() {
     string message = "", input , update;
-    int tempK = this->k;
+    int tempK = this->data.getK();
     message = message.append ("The current KNN parameters are: K = ");
-    message = message.append(to_string(this->k));
+    message = message.append(to_string(tempK));
     message = message.append(", distance metric = ");
-    message = message.append(this->nameDistance);
+    message = message.append(this->data.getNameNorm());
     this->dio->write(message);
     input = this->dio->read();
     if (!input.empty()) {
@@ -31,21 +31,22 @@ void algorithm_settings::execute() {
         if (tempDis == nullptr)
             this->dio->write("invalid value for metric");
         else if (update.empty()) {
-            this->k = tempK;
-            this->distance = tempDis;
-            this->nameDistance = tempName;
+            this->data.setK(tempK);
+            this->data.setNorm( tempDis);
+            this->data.setNameNorm(tempName);
         } else {
             this->dio->write("too many arguments");
         }
     }
 }
 
-algorithm_settings::algorithm_settings(string des, DefaultIO* dio) {
+algorithm_settings::algorithm_settings(string des, DefaultIO* dio,global_data *data) {
     this->description=std::move(des);
     this->dio=dio;
-    this->k = 5;
-    this->distance= new EuclideanDistance;
-    this->nameDistance = "EUC";
+    this->data = data;
+    this->data->setK(5);
+    this->data->setNorm(new EuclideanDistance);
+    this->data->setNameNorm("EUC");
 }
 
 bool algorithm_settings::getFlag() {

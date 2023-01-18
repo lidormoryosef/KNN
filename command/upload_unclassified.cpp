@@ -19,9 +19,10 @@ void upload_unclassified::execute() {
 
 }
 
-upload_unclassified::upload_unclassified(string des, DefaultIO* dio) {
+upload_unclassified::upload_unclassified(string des, DefaultIO* dio,global_data* data) {
     this->description=std::move(des);
     this->dio=dio;
+    this->data=data;
 }
 
 bool upload_unclassified::getFlag() {
