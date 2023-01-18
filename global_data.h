@@ -16,7 +16,7 @@ private:
     Distance* norm;
     string name_norm;
 public:
-    void setClassified(vector<NameVector> classified);
+    void setClassified(ClassifiedArray classified);
     void setUnClassified(vector<NameVector> unClassified);
     void setK(int k);
     void setNorm(Distance* dis);

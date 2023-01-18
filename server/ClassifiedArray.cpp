@@ -183,56 +183,8 @@ void ClassifiedArray::SetVectorToCompare(const vector<double>& vector) {
 void ClassifiedArray::SetDistance(Distance *distance1) {
     this->distance=distance1;
 }
-void ClassifiedArray::PopulateVector1(string line) {
-    string temp,curr;
-    stringstream dev(line);
-    while(getline(dev,curr,'\n')) {
-        stringstream s(curr);
-        vector<double> vec;
-        while (getline(s, temp, ',')) {
-            try {
-                vec.push_back(IsValidDouble(temp));
-            } catch (invalid_argument &e) {
-                NameVector v = NameVector(temp, vec);
-                if (vectors.empty()) {
-                    vectors.push_back(v);
-                } else {
-                    if (ValidVectors(vectors.at(0).GetVector(), vec)) {
-                        vectors.push_back(v);
-                    } else {
-                        cout << "the vectors arent in the same size" << endl;
-                        exit(0);
-                    }
 
-                }
-            }
-        }
-    }
-
+void ClassifiedArray::setVectors(vector<NameVector> arr) {
+    this->vectors=std::move(arr);
 }
-void ClassifiedArray::PopulateVector2(string line){
-    string temp,curr;
-    stringstream dev(line);
-    while(getline(dev,curr,'\n')) {
-        stringstream s(curr);
-        vector<double> vec;
-        while (getline(s, temp, ',')) {
-            try {
-                vec.push_back(IsValidDouble(temp));
-            } catch (invalid_argument &e) {
-                NameVector v = NameVector("", vec);
-                if (vectors.empty()) {
-                    vectors.push_back(v);
-                } else {
-                    if (ValidVectors(vectors.at(0).GetVector(), vec)) {
-                        vectors.push_back(v);
-                    } else {
-                        cout << "the vectors arent in the same size" << endl;
-                        exit(0);
-                    }
 
-                }
-            }
-        }
-    }
-}
