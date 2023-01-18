@@ -8,11 +8,11 @@
 
 void algorithm_settings::execute() {
     string message = "", input , update;
-    int tempK = this->data.getK();
+    int tempK = this->data->getK();
     message = message.append ("The current KNN parameters are: K = ");
     message = message.append(to_string(tempK));
     message = message.append(", distance metric = ");
-    message = message.append(this->data.getNameNorm());
+    message = message.append(this->data->getNameNorm());
     this->dio->write(message);
     input = this->dio->read();
     if (!input.empty()) {
@@ -31,9 +31,9 @@ void algorithm_settings::execute() {
         if (tempDis == nullptr)
             this->dio->write("invalid value for metric");
         else if (update.empty()) {
-            this->data.setK(tempK);
-            this->data.setNorm( tempDis);
-            this->data.setNameNorm(tempName);
+            this->data->setK(tempK);
+            this->data->setNorm( tempDis);
+            this->data->setNameNorm(tempName);
         } else {
             this->dio->write("too many arguments");
         }

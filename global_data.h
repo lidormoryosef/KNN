@@ -7,6 +7,7 @@
 
 
 #include "server/ClassifiedArray.h"
+#include "server/EuclideanDistance.h"
 
 class global_data {
 private:
@@ -23,7 +24,7 @@ public:
     void setNameNorm(string name);
     ClassifiedArray getClassified();
     vector<NameVector> getUnClassified();
-    int getK();
+    int getK() const;
     Distance* getNorm();
     string getNameNorm();
     global_data();

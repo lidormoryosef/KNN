@@ -9,12 +9,15 @@ void classify_data::execute() {
     this->data->getClassified().SetDistance(this->data->getNorm());
     this->data->getClassified().SortByValue();
     int size = this->data->getUnClassified().size();
+    if (size< this->data->getK()) {
+        dio->write("your k is invalid!");
+        return;
+    }
     for (int i = 0; i <size ; ++i) {
         this->data->getClassified().SetVectorToCompare(this->data->getUnClassified().data()->GetVector());
         this->data->getUnClassified().at(i).SetName(this->data->getClassified().KNN());
     }
-
-
+    this->flag= true;
 }
 
 classify_data::classify_data(string des, DefaultIO* dio,global_data *data) {
