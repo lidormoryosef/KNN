@@ -24,6 +24,7 @@ void algorithm_settings::execute() {
         getline(str, update, ' ');
         string tempName = update;
         distances dis = whatDistance(update);
+        update="";
         getline(str, update, ' ');
         Distance *tempDis;
         tempDis = GetDistanceFun(dis);
