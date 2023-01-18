@@ -201,7 +201,7 @@ void ClassifiedArray::PopulateVector1(string line) {
                         vectors.push_back(v);
                     } else {
                         cout << "the vectors arent in the same size" << endl;
-                        exit_command(0);
+                        exit(0);
                     }
 
                 }
@@ -228,7 +228,7 @@ void ClassifiedArray::PopulateVector2(string line){
                         vectors.push_back(v);
                     } else {
                         cout << "the vectors arent in the same size" << endl;
-                        exit_command(0);
+                        exit(0);
                     }
 
                 }
