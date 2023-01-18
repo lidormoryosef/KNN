@@ -6,15 +6,15 @@
 #define EX_4_COMMAND_H
 
 #include <string>
-#include "../IO/DefaultIO.h"
+#include "IO/DefaultIO.h"
 
 using namespace std;
 class Command{
 protected:
     bool flag=false;
+public:
     string description ;
     DefaultIO* dio;
-public:
     virtual void execute ()=0;
     virtual bool getFlag()=0;
 };

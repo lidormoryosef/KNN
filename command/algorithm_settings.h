@@ -7,8 +7,14 @@
 
 
 #include "Command.h"
+#include "server/Distance.h"
+#include "server/Tools.h"
 
 class algorithm_settings: public Command{
+private:
+    int k;
+    Distance *distance;
+    string nameDistance;
 
 public:
     algorithm_settings(string des, DefaultIO* dio);
