@@ -6,8 +6,8 @@
 #define EX_4_GLOBAL_DATA_H
 
 
-#include "server/ClassifiedArray.h"
-#include "server/EuclideanDistance.h"
+#include "../server/ClassifiedArray.h"
+#include "../server/EuclideanDistance.h"
 
 class global_data {
 private:

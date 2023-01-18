@@ -46,7 +46,7 @@ string global_data::getNameNorm() {
 }
 
 Distance *global_data::getNorm() {
-    this->norm;
+    return this->norm;
 }
 
 global_data::global_data() {
