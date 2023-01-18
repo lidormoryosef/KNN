@@ -71,7 +71,6 @@ vector<NameVector> upload_unclassified::PopulateVectorClassified(const string& l
                     } else {
                         dio->write("the vectors arent in the same size");
                         flag=false;
-                        return vectors;
                     }
 
                 }
