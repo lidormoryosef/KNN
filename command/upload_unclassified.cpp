@@ -1,12 +1,7 @@
 //
 // Created by lidor on 1/17/23.
 //
-
 #include "upload_unclassified.h"
-#include "../IO/DefaultIO.h"
-#import <sstream>
-#include <utility>
-#include "../server/Tools.h"
 void upload_unclassified::execute() {
     dio->write("Please upload your local train CSV file.");
     vector<NameVector> vectorWithoutClassification;

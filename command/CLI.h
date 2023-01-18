@@ -13,7 +13,7 @@
 #include "upload_unclassified.h"
 #include "display_result.h"
 #include "download_results.h"
-#include "../global_data.h"
+#include "global_data.h"
 
 class CLI {
 private:

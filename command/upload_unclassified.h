@@ -4,11 +4,15 @@
 
 #ifndef EX_4_UPLOAD_UNCLASSIFIED_H
 #define EX_4_UPLOAD_UNCLASSIFIED_H
-
+#include "upload_unclassified.h"
+#include "../IO/DefaultIO.h"
+#include  <sstream>
+#include <utility>
+#include "../server/Tools.h"
 #include "Command.h"
 #include "../server/ClassifiedArray.h"
 #include "../IO/DefaultIO.h"
-#include "../global_data.h"
+#include "global_data.h"
 
 class upload_unclassified: public Command{
 public:

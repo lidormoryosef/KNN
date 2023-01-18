@@ -7,8 +7,8 @@
 
 
 #include "Command.h"
-#include "server/Distance.h"
-#include "server/Tools.h"
+#include "../server/Distance.h"
+#include "../server/Tools.h"
 #include "global_data.h"
 
 class algorithm_settings: public Command{

@@ -7,8 +7,9 @@
 
 void CLI::start() {
     while (true) {
+        def->write("Welcome to the KNN Classifier Server. Please choose an option:\n");
         for (int i = 1; i < 7; ++i) {
-            arr[i]->description;
+            def->write(arr[i]->getDescription());
         }
         int choice;
         string str = def->read();
@@ -18,8 +19,13 @@ void CLI::start() {
             this->def->write("invalid choice, try again.");
             continue;
         }
-        if (choice==8)
+        if (choice==8) {
             arr[6]->execute();
+            for (int i = 1; i < 7; ++i) {
+                free(arr[i]);
+            }
+            break;
+        }
         if (checkValidationCommand(choice))
             arr[choice]->execute();
         else{

@@ -4,7 +4,6 @@
 
 #include <sstream>
 #include "algorithm_settings.h"
-#include "server/EuclideanDistance.h"
 
 void algorithm_settings::execute() {
     string message = "", input , update;
@@ -32,6 +31,7 @@ void algorithm_settings::execute() {
             this->dio->write("invalid value for metric");
         else if (update.empty()) {
             this->data->setK(tempK);
+            free(this->data->getNorm());
             this->data->setNorm( tempDis);
             this->data->setNameNorm(tempName);
         } else {
@@ -44,9 +44,6 @@ algorithm_settings::algorithm_settings(string des, DefaultIO* dio,global_data *d
     this->description=std::move(des);
     this->dio=dio;
     this->data = data;
-    this->data->setK(5);
-    this->data->setNorm(new EuclideanDistance);
-    this->data->setNameNorm("EUC");
 }
 
 bool algorithm_settings::getFlag() {

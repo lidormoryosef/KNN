@@ -5,7 +5,9 @@
 #include "exit_command.h"
 
 void exit_command::execute() {
-
+    free(data->getNorm());
+    free(dio);
+    free(data);
 }
 
 exit_command::exit_command(string des, DefaultIO* dio,global_data* data) {
