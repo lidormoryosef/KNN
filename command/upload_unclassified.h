@@ -6,12 +6,17 @@
 #define EX_4_UPLOAD_UNCLASSIFIED_H
 
 #include "Command.h"
+#include "../server/ClassifiedArray.h"
 
 class upload_unclassified: public Command{
+private:
+    ClassifiedArray classifiedArray;
+    ClassifiedArray unClassifiedArray;
 public:
    upload_unclassified(string des,DefaultIO* dio);
     void execute () override;
     bool getFlag() override;
+    ClassifiedArray populateArrays(bool check);
 };
 
 

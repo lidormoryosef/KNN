@@ -26,8 +26,10 @@ private:
 
 public:
     ClassifiedArray(string path, vector<double> ToCompare, int k, Distance *distance1);
-    ClassifiedArray(string path);
+    ClassifiedArray();
     void PopulateVector();
+    void PopulateVector1(string line);
+    void PopulateVector2(string line);
     std::vector<NameVector> GetVectors();
     string GetPath();
     void SetPath (string NewPath);

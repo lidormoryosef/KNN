@@ -18,7 +18,7 @@ string SocketIO::read() {
         }
         s=s.append(buffer);
 
-    } while (buffer[read_bytes-1]!='\n');
+    } while (buffer[read_bytes-1]!='$');
     return s;
 }
 
