@@ -6,8 +6,7 @@
 #define EX_4_COMMAND_H
 
 #include <string>
-#include "DefaultIO.h"
-
+#include "IO/DefaultIO.h"
 using namespace std;
 class Command{
 protected:

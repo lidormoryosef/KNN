@@ -40,7 +40,7 @@ void ClassifiedArray::PopulateVector() {
     fin.open(this->path,ios::in);
     if(!fin){
         cout<<"invalid path!"<<endl;
-        exit_command(0);
+        exit(0);
     }
     string line,temp;
     while(getline(fin,temp)){
@@ -60,7 +60,7 @@ void ClassifiedArray::PopulateVector() {
                     }
                     else{
                         cout<<"the vectors arent in the same size"<<endl;
-                        exit_command(0);
+                        exit(0);
                     }
 
                 }
