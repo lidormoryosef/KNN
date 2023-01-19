@@ -35,8 +35,6 @@ bool upload_unclassified::getFlag() {
 ClassifiedArray upload_unclassified::populateTheClassified() {
     string str=dio->read();
     ClassifiedArray array=ClassifiedArray();
-    //int len=str.size();
-    //string last=str.substr(0,len-1);
     array.setVectors(PopulateVectorClassified(str));
     return array;
 }
@@ -44,8 +42,6 @@ ClassifiedArray upload_unclassified::populateTheClassified() {
 vector<NameVector> upload_unclassified::populateTheUnClassified() {
     string str=dio->read();
     ClassifiedArray array=ClassifiedArray();
-    //int len=str.size();
-    //string last=str.substr(0,len-1);
     array.setVectors(PopulateVectorUnClassified(str));
     return array.GetVectors();
 }

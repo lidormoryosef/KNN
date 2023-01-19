@@ -4,16 +4,13 @@
 
 #include "classify_data.h"
 #include "server/Tools.h"
-
-
 void classify_data::execute() {
-    this->data->getClassified().SetK(this->data->getK());
-    this->data->getClassified().SetDistance(this->data->getNorm());
     int size = this->data->getUnClassified().size();
     if (size< this->data->getK()) {
         dio->write("your k is invalid!");
         return;
     }
+
     vector<NameVector> temp=this->data->getUnClassified();
     for (int i = 0; i <size ; ++i) {
         vector<double> vv = this->data->getUnClassified().at(i).GetVector();
