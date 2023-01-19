@@ -7,7 +7,6 @@
 #include <csignal>
 #include "Tools.h"
 #include "ClassifiedArray.h"
-#include "run_main.h"
 #include "../IO/DefaultIO.h"
 
 #include "../command/CLI.h"

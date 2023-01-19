@@ -10,7 +10,7 @@ void display_result::execute() {
         string message = "";
         message = message.append(to_string(i+1));
         message = message.append("\t");
-        message = message.append(this->data->getUnClassified().data()->GetName());
+        message = message.append(this->data->getUnClassified().at(i).GetName());
         message = message.append("\n");
         dio->write(message);
     }

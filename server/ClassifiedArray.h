@@ -33,16 +33,13 @@ public:
     string GetPath();
     void SetPath (string NewPath);
     void SetVectorToCompare (const vector<double>& vector);
-
     int GetK() const;
     void SetK (int k);
     void SetDistance(Distance *distance1);
+//    void SortByValue();
+//    string FindClassification();
 
-    void SortByValue();
-    void PopulateDistance ();
-    string FindClassification();
-
-    string KNN ();
+    //string KNN (vector<double> compare,Distance *dis);
 
 };
 

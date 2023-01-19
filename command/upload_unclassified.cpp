@@ -6,15 +6,18 @@ void upload_unclassified::execute() {
     dio->write("Please upload your local train CSV file.");
     vector<NameVector> vectorWithoutClassification;
     ClassifiedArray vectorWithClassification;
+    ClassifiedArray temp=data->getClassified();
     vectorWithClassification=populateTheClassified();
     if(!flag)
         return;
     dio->write("Upload complete.");
+    this->data->setClassified(vectorWithClassification);
     dio->write("Please upload your local test CSV file.");
     vectorWithoutClassification=populateTheUnClassified();
-    if(!flag)
+    if(!flag) {
+        data->setClassified(temp);
         return;
-    this->data->setClassified(vectorWithClassification);
+    }
     this->data->setUnClassified(vectorWithoutClassification);
     dio->write("Upload complete.");
 }
@@ -32,18 +35,14 @@ bool upload_unclassified::getFlag() {
 ClassifiedArray upload_unclassified::populateTheClassified() {
     string str=dio->read();
     ClassifiedArray array=ClassifiedArray();
-    int len=str.size()-1;
-    string last=str.substr(0,len-1);
-    array.setVectors(PopulateVectorClassified(last));
+    array.setVectors(PopulateVectorClassified(str));
     return array;
 }
 
 vector<NameVector> upload_unclassified::populateTheUnClassified() {
     string str=dio->read();
     ClassifiedArray array=ClassifiedArray();
-    int len=str.size()-1;
-    string last=str.substr(0,len-1);
-    array.setVectors(PopulateVectorUnClassified(last));
+    array.setVectors(PopulateVectorUnClassified(str));
     return array.GetVectors();
 }
 vector<NameVector> upload_unclassified::PopulateVectorClassified(const string& line)  {
