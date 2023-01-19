@@ -12,17 +12,22 @@ string SocketIO::read() {
     string s;
     do {
         read_bytes = recv(client_sock, buffer, expected_data_len, 0);
-        if (read_bytes < 0) {
+        if (read_bytes == 0) {
+            close(client_sock);
+            break;
+        }
+            if (read_bytes < 0) {
             close(client_sock);
             break;
         }
         s=s.append(buffer);
 
     } while (buffer[read_bytes-1]!='$');
-    return s;
+    return s.substr(0,s.size()-1);
 }
 
 void SocketIO::write(string str) {
+    str.append("$");
     const char* toSend=str.c_str();
     int sent_bytes = send(client_sock,toSend, str.size(), 0);
     if (sent_bytes < 0) {
