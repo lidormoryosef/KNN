@@ -7,15 +7,13 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <string.h>
 #include <fstream>
 #include "../IO/SocketIO.h"
 #include "../IO/StandardIO.h"
-
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
-bool IsValidK(string s);
+bool IsValidK(const string& s);
 /**
  * this function response the connection between the client and the server.
  * @param argc , number of arguments.
@@ -48,8 +46,8 @@ int main(int argc,char* argv[]) {
         return 0;
     }
     while (true) {
-        DefaultIO* dio=new SocketIO(sock);
-        DefaultIO* local=new StandardIO();
+        DefaultIO *dio=new SocketIO(sock);
+        DefaultIO *local=new StandardIO();
         string choice,path,file="",temp,params;
         int pick;
         fstream fin;
@@ -158,7 +156,7 @@ int checkValidPort (const string& s){
  * @param s , the string of client
  * @return -1 if want to stop  the specified.
  */
-bool wantToContinue(string s){
+bool wantToContinue(const string& s){
     return !(s=="-1");
 }
 bool IsValidK(const string& s){

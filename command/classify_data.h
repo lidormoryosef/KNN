@@ -4,7 +4,7 @@
 
 #ifndef EX_4_CLASSIFY_DATA_H
 #define EX_4_CLASSIFY_DATA_H
-
+#include "../server/Tools.h"
 #include "Command.h"
 class classify_data: public Command{
 public:

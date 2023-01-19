@@ -25,6 +25,9 @@ string SocketIO::read() {
     } while (buffer[read_bytes-1]!='$');
     return s.substr(0,s.size()-1);
 }
+SocketIO::SocketIO(int client_sock) {
+    this->client_sock=client_sock;
+}
 
 void SocketIO::write(string str) {
     str.append("$");
@@ -33,8 +36,5 @@ void SocketIO::write(string str) {
     if (sent_bytes < 0) {
         perror("error sending to client");
     }
-}
 
-SocketIO::SocketIO(int client_sock) {
-    this->client_sock=client_sock;
 }

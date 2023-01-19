@@ -11,6 +11,7 @@
 
 #include "../command/CLI.h"
 #include "../IO/StandardIO.h"
+#include "../IO/SocketIO.h"
 //
 // Created by lidor on 12/26/22.
 //
@@ -49,12 +50,12 @@ int main(int argc,char* argv[]) {
     struct sockaddr_in client_sin;
     unsigned int addr_len = sizeof(client_sin);
     while (true) {
-        //int client_sock = accept(sock, (struct sockaddr *) &client_sin, &addr_len);
-        //if (client_sock < 0) {
-            //perror("error accepting client");
-        //}
-        //DefaultIO *def = new SocketIO(client_sock);
-        DefaultIO *def = new StandardIO();
+        int client_sock = accept(sock, (struct sockaddr *) &client_sin, &addr_len);
+        if (client_sock < 0) {
+            perror("error accepting client");
+        }
+        DefaultIO *def = new SocketIO(client_sock);
+        //DefaultIO *def = new StandardIO();
         //string massage = def->read();
         CLI cli = CLI(5,def);
         cli.start();
