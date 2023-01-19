@@ -7,10 +7,12 @@
 
 void CLI::start() {
     while (true) {
-        def->write("Welcome to the KNN Classifier Server. Please choose an option:\n");
+        string massage = "";
+        massage.append("Welcome to the KNN Classifier Server. Please choose an option:\n");
         for (int i = 1; i < 7; ++i) {
-            def->write(arr[i]->getDescription());
+            massage.append(arr[i]->getDescription());
         }
+        this->def->write(massage);
         int choice;
         string str = def->read();
         if (IsValidK(str)) {

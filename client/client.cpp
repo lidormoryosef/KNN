@@ -53,11 +53,13 @@ int main(int argc,char* argv[]) {
         fstream fin;
         local->write(dio->read());
         choice=local->read();
+        //dio->write("");
         if(IsValidK(choice)){
             pick=stoi(choice);
             dio->write(choice);
             switch(pick) {
                 case 1:
+                    local->write(dio->read());
                     path = local->read();
                     fin.open(path, ios::in);
                     if (!fin) {

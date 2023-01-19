@@ -23,7 +23,7 @@ enum distances {
 int checkValidPort (const string& s);
 bool IsValidK(const string& s);
 distances whatDistance (const string& dis);
-double IsValidDouble(const string& s);
+double IsValidDouble(string s);
 bool ValidVectors (const vector<double>& v1 ,const vector<double>& v2);
 vector<double> MakeVector ();
 Distance* GetDistanceFun(distances dis);

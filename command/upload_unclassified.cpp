@@ -4,6 +4,7 @@
 #include "upload_unclassified.h"
 void upload_unclassified::execute() {
     dio->write("Please upload your local train CSV file.");
+    //dio->read();
     vector<NameVector> vectorWithoutClassification;
     ClassifiedArray vectorWithClassification;
     ClassifiedArray temp=data->getClassified();
@@ -49,12 +50,17 @@ vector<NameVector> upload_unclassified::PopulateVectorClassified(const string& l
     string temp,curr;
     vector<NameVector> vectors;
     stringstream dev(line);
+    size_t index;
     while(getline(dev,curr,'\n')) {
         stringstream s(curr);
         vector<double> vec;
         while (getline(s, temp, ',')) {
             try {
-                vec.push_back(IsValidDouble(temp));
+                double number=stod(temp,&index);
+                if (index < temp.size()) {
+                    throw invalid_argument("error");
+                }
+                vec.push_back(number);
             } catch (invalid_argument &e) {
                 NameVector v = NameVector(temp, vec);
                 if (vectors.empty()) {
