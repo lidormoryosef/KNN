@@ -18,8 +18,9 @@ string SocketIO::read() {
         }
         s=s.append(buffer);
 
-    } while (buffer[read_bytes-1]!='\n');
-    return s;
+    } while (buffer[read_bytes-1]!='$');
+
+    return s.substr(0,s.size()-1);
 }
 
 void SocketIO::write(string str) {

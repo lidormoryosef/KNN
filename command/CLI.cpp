@@ -3,12 +3,13 @@
 //
 
 #include "CLI.h"
-#include "server/Tools.h"
+#include "../server/Tools.h"
 
 void CLI::start() {
     while (true) {
+        def->write("Welcome to the KNN Classifier Server. Please choose an option:\n");
         for (int i = 1; i < 7; ++i) {
-            arr[i]->description;
+            def->write(arr[i]->getDescription());
         }
         int choice;
         string str = def->read();
@@ -18,8 +19,13 @@ void CLI::start() {
             this->def->write("invalid choice, try again.");
             continue;
         }
-        if (choice==8)
+        if (choice==8) {
             arr[6]->execute();
+            for (int i = 1; i < 7; ++i) {
+                free(arr[i]);
+            }
+            break;
+        }
         if (checkValidationCommand(choice))
             arr[choice]->execute();
         else{
@@ -43,12 +49,13 @@ CLI::CLI(int client_sock, DefaultIO *def) {
 }
 
 void CLI::populateArr() {
-    this->arr[1]=new upload_unclassified("1. upload an unclassified csv data file\n", this->def);
-    this->arr[2]=new upload_unclassified("2. algorithm setting\n\n", this->def);
-    this->arr[3]=new upload_unclassified("3. classify data\n", this->def);
-    this->arr[4]=new upload_unclassified("4. display results\n", this->def);
-    this->arr[5]=new upload_unclassified("5. download results \n", this->def);
-    this->arr[6]=new upload_unclassified("8. exit\n", this->def);
+    global_data *data = new global_data();
+    this->arr[1]=new upload_unclassified("1. upload an unclassified csv data file\n", this->def,data);
+    this->arr[2]=new algorithm_settings("2. algorithm setting\n", this->def,data);
+    this->arr[3]=new classify_data("3. classify data\n", this->def,data);
+    this->arr[4]=new display_result("4. display results\n", this->def,data);
+    this->arr[5]=new download_results("5. download results \n", this->def,data);
+    this->arr[6]=new exit_command("8. exit\n", this->def,data);
 }
 
 bool CLI::checkValidationCommand(int choice) {
@@ -58,3 +65,7 @@ bool CLI::checkValidationCommand(int choice) {
         return arr[3]->getFlag();
     return true;
 }
+
+//global_data CLI::getData() {
+  //  return this->data;
+//}

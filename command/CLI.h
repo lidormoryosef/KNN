@@ -13,6 +13,7 @@
 #include "upload_unclassified.h"
 #include "display_result.h"
 #include "download_results.h"
+#include "global_data.h"
 
 class CLI {
 private:
@@ -20,7 +21,9 @@ private:
     int client_sock;
     DefaultIO* def;
     void populateArr();
+    //global_data data;
 public:
+    //global_data getData ();
     CLI(int client_sock,DefaultIO* def);
     void start();
     bool checkValidationCommand(int choice);

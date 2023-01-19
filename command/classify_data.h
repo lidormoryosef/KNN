@@ -8,9 +8,13 @@
 #include "Command.h"
 class classify_data: public Command{
 public:
-    classify_data(string des, DefaultIO* dio);
+    void PopulateDistance(vector<double> compare);
+    string KNN(vector<double> compare);
+    classify_data(string des, DefaultIO* dio,global_data *data);
     void execute () override;
     bool getFlag() override;
+    void SortByValue();
+    string FindClassification();
 };
 
 

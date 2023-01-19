@@ -13,7 +13,6 @@ using namespace std;
 #include "ChebyshevDistance.h"
 #include "EuclideanDistance.h"
 #include "Tools.h"
-#include <limits>
 #include <sstream>
 /**
  * check if the port are valid.
@@ -48,14 +47,22 @@ distances whatDistance (const string& dis){
  * @param s the string.
  * @return if the string ia number, return the number, else throw exception.
  */
-double IsValidDouble(const string& s){
-    string message="the vector is invalid";
+double IsValidDouble(const string& s) {
+    string message = "the vector is invalid";
     size_t index;
-    double number=stod(s,&index);
-    if(index<s.size()){
+    try {
+    double number = stod(s, &index);
+    if (index < s.size()) {
         throw invalid_argument(message);
     }
-    return number;
+        return number;
+    }
+    catch (invalid_argument &e){
+        throw invalid_argument(message);
+    }
+    catch(out_of_range &e){
+        throw invalid_argument(message);
+    }
 }
 
 /**

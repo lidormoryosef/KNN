@@ -29,8 +29,7 @@ ClassifiedArray::ClassifiedArray(string path , vector<double> ToCompare, int k, 
  * constructor
  * @param path ,the path of file.
  */
-ClassifiedArray::ClassifiedArray(string path){
-    this->path=std::move(path);
+ClassifiedArray::ClassifiedArray(){
 }
 /**
  * this function get from file the vectors that represent data and insert him to new data base.
@@ -71,44 +70,6 @@ void ClassifiedArray::PopulateVector() {
     fin.close();
 }
 /**
- * This function check which type data appears most times in first k vectors on data base ofter sort.
- * @return , type of data the appears most times.
- */
-string ClassifiedArray::FindClassification(){
-    map<string,int> map;
-    for(int i=0;i<this->k;i++){
-        if(map.count(this->vectors.at(i).GetName())){
-            map.at(this->vectors.at(i).GetName())++;
-        }else{
-            map.insert({this->vectors.at(i).GetName(),1});
-        }
-    }
-    string curr;
-    int max=0;
-    for(auto & it : map){
-        if(max<it.second) {
-            curr = it.first;
-            max=it.second;
-        }
-    }
-    return curr;
-}
-/**
- * compare function for sort.
- * @param v1 , first vector we wont to compare.
- * @param v2 , secund vector we wont to compare.
- * @return if the first smallest than first.
- */
-bool CompareDistance(NameVector v1,NameVector v2){
-    return v1.GetDistanceFromVector()<v2.GetDistanceFromVector();
-}
-/**
- * this function sort the data base by ascending order the distance between vector to vector we wont to classified.
- */
-void ClassifiedArray::SortByValue(){
-    sort(vectors.begin(),vectors.end(), CompareDistance);
-}
-/**
  * getter.
  * @return the data base.
  */
@@ -132,19 +93,6 @@ void ClassifiedArray::SetPath (string NewPath){
 /**
  * This function update the field of distance in ant data in data base to the distance between him to vector compare.
  */
-void ClassifiedArray::PopulateDistance() {
-    if(ValidVectors(this->ToCompare,this->vectors.at(0).GetVector())) {
-        for (int i = 0; i < this->vectors.size(); ++i) {
-            vectors.at(i).SetDistanceFromVector(distance->distance(ToCompare, vectors.at(i).GetVector()));
-        }
-    }
-    else{
-        string message="the vector is invalid";
-        throw invalid_argument(message);
-
-    }
-
-}
 
 /**
  * getter.
@@ -161,16 +109,6 @@ void ClassifiedArray::SetK(int k) {
     this->k = k;
 }
 /**
- * run the all project.
- * @return the vector we classified.
- */
-string ClassifiedArray::KNN() {
-    PopulateDistance();
-    SortByValue();
-    return FindClassification();
-
-}
-/**
  * setter.
  * @param ToCompare set the vector  .
  */
@@ -184,3 +122,8 @@ void ClassifiedArray::SetVectorToCompare(const vector<double>& vector) {
 void ClassifiedArray::SetDistance(Distance *distance1) {
     this->distance=distance1;
 }
+
+void ClassifiedArray::setVectors(vector<NameVector> arr) {
+    this->vectors=std::move(arr);
+}
+
