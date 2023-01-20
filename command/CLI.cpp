@@ -13,6 +13,7 @@ void CLI::start() {
             massage.append(arr[i]->getDescription());
         }
         this->def->write(massage);
+        def->read();
         int choice;
         string str = def->read();
         if (IsValidK(str)) {

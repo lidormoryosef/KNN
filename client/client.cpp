@@ -8,8 +8,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fstream>
-#include "../IO/SocketIO.h"
-#include "../IO/StandardIO.h"
+#include "IO/SocketIO.h"
+#include "IO/StandardIO.h"
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
@@ -48,7 +48,8 @@ int main(int argc,char* argv[]) {
     while (true) {
         DefaultIO *dio=new SocketIO(sock);
         DefaultIO *local=new StandardIO();
-        string choice,path,file="",temp,params;
+        dio->write("");
+        string choice,path,file,temp,params;
         int pick;
         fstream fin;
         local->write(dio->read());
@@ -68,11 +69,16 @@ int main(int argc,char* argv[]) {
                     }
                     while (getline(fin, temp)) {
                         file.append(temp);
+                        file.append("\n");
                     }
                     dio->write(file);
                     local->write(dio->read());
-                    path = local->read();
+                    dio->write("");
+                    local->write(dio->read());
+                    //dio->write("");
                     fin.close();
+                    path = local->read();
+                    file.clear();
                     fin.open(path, ios::in);
                     if (!fin) {
                         cout << "invalid path!" << endl;
@@ -84,6 +90,7 @@ int main(int argc,char* argv[]) {
                     dio->write(file);
                     local->write(dio->read());
                     fin.close();
+                    dio->write("");
                     break;
                 case 2:
                     local->write(dio->read());

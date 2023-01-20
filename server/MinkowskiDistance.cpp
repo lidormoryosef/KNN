@@ -10,7 +10,7 @@
  * @param p the default p that with it we calculate the distance.
  * @return the distance.
  */
-double MinkowskiDistance::distance (vector<double> v1 , vector<double> v2){
+double MinkowskiDistance::distance (vector<double> v1 , const vector<double>& v2){
     double sum=0, distance, result;
     for (int i = 0; i < v1.size(); ++i) {
         distance = abs(v1.at(i)-v2.at(i));

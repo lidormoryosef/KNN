@@ -8,7 +8,7 @@
 string SocketIO::read() {
     char buffer[4096] = {0};
     int expected_data_len = sizeof(buffer);
-    int read_bytes;
+    ssize_t read_bytes;
     string s;
     do {
         read_bytes = recv(client_sock, buffer, expected_data_len, 0);
@@ -20,7 +20,7 @@ string SocketIO::read() {
             close(client_sock);
             break;
         }
-        s=s.append(buffer);
+        s.append(buffer);
 
     } while (buffer[read_bytes-1]!='$');
     return s.substr(0,s.size()-1);

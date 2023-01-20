@@ -10,7 +10,7 @@
  * @param v2 the second vector.
  * @return the distance.
  */
-double CanberraDistance::distance(vector<double> v1, vector<double> v2) {
+double CanberraDistance::distance(vector<double> v1, const vector<double>& v2) {
     double distance, sum = 0, AbsV1, AbsV2;
     for (int i = 0; i < v1.size(); ++i) {
         distance = abs(v1.at(i)-v2.at(i));

@@ -14,7 +14,7 @@ using namespace std;
  * this class represent Manhattan distance.
  */
 class ManhattanDistance:public Distance  {
-    double distance(vector<double> v1, vector<double> v2) override;
+    double distance(vector<double> v1, const vector<double>& v2) override;
 
 };
 

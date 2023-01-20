@@ -2,6 +2,8 @@
 // Created by lidor on 1/17/23.
 //
 #include "classify_data.h"
+
+#include <utility>
 void classify_data::execute() {
     int size = this->data->getUnClassified().size();
     if (size< this->data->getK()) {
@@ -17,6 +19,7 @@ void classify_data::execute() {
     }
     this->data->setUnClassified(temp);
     this->flag= true;
+    this->dio->write("classifying data complete");
 }
 classify_data::classify_data(string des, DefaultIO* dio,global_data *data) {
     this->description=std::move(des);
@@ -30,11 +33,12 @@ bool classify_data::getFlag() {
 /**
  * this function get from file the vectors that represent data and insert him to new data base.
  */
-void classify_data::PopulateDistance(vector<double> compare) {
+void classify_data::PopulateDistance(const vector<double>& compare) {
     ClassifiedArray temp=this->data->getClassified();
     vector<NameVector> v=temp.GetVectors();
+    int size = this->data->getClassified().GetVectors().size();
     if(ValidVectors(compare, this->data->getClassified().GetVectors().at(0).GetVector())) {
-        for (int i = 0; i < this->data->getUnClassified().size(); ++i) {
+        for (int i = 0; i < size; ++i) {
             double dis = this->data->getNorm()->distance(this->data->getClassified().GetVectors().at(i).GetVector(),compare);
             v.at(i).SetDistanceFromVector(dis);
         }
@@ -51,7 +55,7 @@ void classify_data::PopulateDistance(vector<double> compare) {
  * run the all project.
  * @return the vector we classified.
  */
-string classify_data::KNN(vector<double> compare) {
+string classify_data::KNN(const vector<double>& compare) {
     PopulateDistance(compare);
     if (this->data->getClassified().GetVectors().size()>1)
         SortByValue();
@@ -71,8 +75,11 @@ bool CompareDistance(NameVector v1,NameVector v2){
  * this function sort the data base by ascending order the distance between vector to vector we wont to classified.
  */
 void classify_data::SortByValue() {
-
-    sort(this->data->getClassified().GetVectors().begin(),this->data->getClassified().GetVectors().end(), CompareDistance);
+    ClassifiedArray cls;
+    vector<NameVector> v = this->data->getClassified().GetVectors();
+    sort(v.begin(), v.end(),CompareDistance);
+    cls.setVectors(v);
+    this->data->setClassified(cls);
 }
 /**
  * This function check which type data appears most times in first k vectors on data base ofter sort.

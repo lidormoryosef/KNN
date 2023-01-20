@@ -22,9 +22,9 @@ public:
     ClassifiedArray populateTheClassified();
     vector<NameVector> populateTheUnClassified();
 
-    vector<NameVector> PopulateVectorClassified(const string& line);
+    vector<NameVector> PopulateVectorClassified(string& line);
 
-    vector<NameVector> PopulateVectorUnClassified(const string& line);
+    vector<NameVector> PopulateVectorUnClassified(string& line);
 };
 
 
