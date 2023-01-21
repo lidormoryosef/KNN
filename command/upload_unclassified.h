@@ -19,8 +19,8 @@ public:
    upload_unclassified(string des,DefaultIO* dio,global_data* data);
     void execute () override;
     bool getFlag() override;
-    ClassifiedArray populateTheClassified();
-    vector<NameVector> populateTheUnClassified();
+    ClassifiedArray populateTheClassified(string str);
+    vector<NameVector> populateTheUnClassified(string str);
 
     vector<NameVector> PopulateVectorClassified(string& line);
 

@@ -13,13 +13,15 @@ void CLI::start() {
             massage.append(arr[i]->getDescription());
         }
         this->def->write(massage);
-        def->read();
+        //def->read();
+        //def->write("");
         int choice;
         string str = def->read();
         if (IsValidK(str)) {
             choice = stoi(str);
         } else {
             this->def->write("invalid choice, try again.");
+            this->def->read();
             continue;
         }
         if (choice==8) {

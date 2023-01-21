@@ -14,30 +14,62 @@ void algorithm_settings::execute() {
     message = message.append(this->data->getNameNorm());
     this->dio->write(message);
     input = this->dio->read();
+    size_t index;
     if (!input.empty()) {
-        stringstream str(input);
-        getline(str, update, ' ');
-        if (IsValidK(update))
+        if ((index = input.find(' ')) == string::npos){
+            this->dio->write("invalid value for metric");
+            this->dio->read();
+            return;
+        }
+        //stringstream str(input);
+        //getline(str, update, ' ');
+        update = input.substr(0,index);
+        input = input.substr(index+1);
+        try{
             tempK = stoi(update);
-        else
+            }
+        catch (exception &e){
             this->dio->write("invalid value for K");
-        getline(str, update, ' ');
-        string tempName = update;
+            this->dio->read();
+            return;
+        }
+        if ((index = input.find(' ')) != string::npos) {
+            index = input.find(' ');
+            update = input.substr(0,index);
+            input= input.substr(index+1);
+        }
+        else{
+            update= input;
+            input = input.substr(3);
+
+        }
+        //getline(str, update, ' ');
+        //index = input.find(' ');
+        //update = input.substr(0, index);
+        //string tempName = update;
         distances dis = whatDistance(update);
-        update="";
-        getline(str, update, ' ');
+        //update="";
+        //input = input.substr(index+4);
+        //getline(str, update, ' ');
         Distance *tempDis;
         tempDis = GetDistanceFun(dis);
-        if (tempDis == nullptr)
+        if (tempDis == nullptr) {
             this->dio->write("invalid value for metric");
-        else if (update.empty()) {
+            this->dio->read();
+            return;
+        }
+        if (input.empty()) {
             this->data->setK(tempK);
             free(this->data->getNorm());
             this->data->setNorm( tempDis);
-            this->data->setNameNorm(tempName);
+            this->data->setNameNorm(update);
         } else {
             this->dio->write("too many arguments");
+            this->dio->read();
+            return;
         }
+        dio->write("");
+        dio->read();
     }
 }
 

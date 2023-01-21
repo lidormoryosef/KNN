@@ -21,6 +21,7 @@ bool IsValidK(const string& s);
  * @return
  */
 int main(int argc,char* argv[]) {
+    string str;
     if(argc!=3){
         cout<<"the number of arguments passed is invalid"<<endl;
         return 0;
@@ -48,11 +49,12 @@ int main(int argc,char* argv[]) {
     while (true) {
         DefaultIO *dio=new SocketIO(sock);
         DefaultIO *local=new StandardIO();
-        dio->write("");
         string choice,path,file,temp,params;
         int pick;
         fstream fin;
         local->write(dio->read());
+        //dio->write("");
+        //dio->read();
         choice=local->read();
         //dio->write("");
         if(IsValidK(choice)){
@@ -65,7 +67,8 @@ int main(int argc,char* argv[]) {
                     fin.open(path, ios::in);
                     if (!fin) {
                         cout << "invalid path!" << endl;
-                        break;
+                        dio->write("");
+                        continue;
                     }
                     while (getline(fin, temp)) {
                         file.append(temp);
@@ -82,7 +85,8 @@ int main(int argc,char* argv[]) {
                     fin.open(path, ios::in);
                     if (!fin) {
                         cout << "invalid path!" << endl;
-                        break;
+                        dio->write("");
+                        continue;
                     }
                     while (getline(fin, temp)) {
                         file.append(temp);
@@ -96,19 +100,24 @@ int main(int argc,char* argv[]) {
                     local->write(dio->read());
                     params=local->read();
                     dio->write(params);
+                    str = dio->read();
+                    if (!str.empty())
+                        local->write(str);
+                    dio->write("");
                     break;
                 case 3:
                     local->write(dio->read());
+                    dio->write("");
                     break;
                 case 4:
                     local->write(dio->read());
+                    dio->write("");
                     break;
                 case 5:
                     path = local->read();
                     fin.open(path, ios::out);
                     if (!fin) {
                         cout << "invalid path!" << endl;
-                        break;
                     }
                     fin << dio->read();
                     fin.close();
@@ -120,7 +129,12 @@ int main(int argc,char* argv[]) {
                 close(sock);
                 break;
             }
-            }
+            }else{
+            dio->write(choice);
+            local->write(dio->read());
+            dio->write("");
+
+        }
 
         }
 //        char buffer[4096]= {0};

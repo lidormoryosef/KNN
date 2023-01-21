@@ -8,18 +8,26 @@ void classify_data::execute() {
     int size = this->data->getUnClassified().size();
     if (size< this->data->getK()) {
         dio->write("your k is invalid!");
+        dio->read();
         return;
     }
 
     vector<NameVector> temp=this->data->getUnClassified();
     for (int i = 0; i <size ; ++i) {
         vector<double> vv = this->data->getUnClassified().at(i).GetVector();
-        string s = KNN(vv);
-          temp.at(i).SetName(s);
+        try {
+            string s = KNN(vv);
+            temp.at(i).SetName(s);
+        }catch(invalid_argument &e) {
+            dio->write("the vector is invalid");
+            dio->read();
+            return;
+        }
     }
     this->data->setUnClassified(temp);
     this->flag= true;
     this->dio->write("classifying data complete");
+    dio->read();
 }
 classify_data::classify_data(string des, DefaultIO* dio,global_data *data) {
     this->description=std::move(des);
