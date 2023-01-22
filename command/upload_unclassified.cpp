@@ -96,7 +96,7 @@ vector<NameVector> upload_unclassified::PopulateVectorUnClassified(string& line)
     vector<NameVector> vectors;
     size_t index;
     size_t delim1, delim2;
-    while((delim1 = line.find('\r')) != string::npos) {
+    while((delim1 = line.find('\n')) != string::npos) {
         string l = line.substr(0, delim1);
         line = line.substr(delim1 + 1);
         vector<double> vec;
@@ -107,13 +107,23 @@ vector<NameVector> upload_unclassified::PopulateVectorUnClassified(string& line)
                 double number=stod(temp,&index);
                 if (index < temp.size()) {
                     dio->write("invalid input");
+                    dio->read();
                 }
                 vec.push_back(number);
             } catch (invalid_argument &e) {
                 dio->write("invalid input");
+                dio->read();
             }
         }
-        vec.push_back(stod(line));
+        try {
+            double number = stod(l);
+            vec.push_back(number);
+        }catch (invalid_argument &e){
+            dio->write("invalid input");
+            dio->read();
+            flag= false;
+            return vectors;
+        }
         NameVector v("", vec);
         if (vectors.empty()) {
             vectors.push_back(v);
@@ -122,6 +132,7 @@ vector<NameVector> upload_unclassified::PopulateVectorUnClassified(string& line)
                 vectors.push_back(v);
             } else {
                 dio->write("invalid input");
+                dio->read();
                 flag=false;
                 return vectors;
             }

@@ -17,6 +17,7 @@ public:
     algorithm_settings(string des, DefaultIO* dio,global_data* data);
     void execute () override;
     bool getFlag() override;
+    string isValidForK (string wrong);
 };
 
 

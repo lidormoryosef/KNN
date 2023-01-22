@@ -128,6 +128,8 @@ Distance* GetDistanceFun(distances dis) {
  * @return
  */
 bool IsValidK(const string& s){
+    if(s.empty())
+        return false;
     for(char i : s){
         if(!isdigit(i))
             return false;

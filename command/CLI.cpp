@@ -17,6 +17,10 @@ void CLI::start() {
         //def->write("");
         int choice;
         string str = def->read();
+        if (str.empty()) {
+            //def->write("");
+            break;
+        }
         if (IsValidK(str)) {
             choice = stoi(str);
         } else {
@@ -38,6 +42,7 @@ void CLI::start() {
                 this->def->write("please upload data");
             else
                 this->def->write("please classify the data");
+            def->read();
             continue;
 
         }
@@ -47,8 +52,8 @@ void CLI::start() {
 
 }
 
-CLI::CLI(int client_sock, DefaultIO *def) {
-    this->client_sock=client_sock;
+CLI::CLI( DefaultIO *def) {
+  //  this->client_sock=client_sock;
     this->def=def;
     populateArr();
 }
@@ -60,7 +65,7 @@ void CLI::populateArr() {
     this->arr[3]=new classify_data("3. classify data\n", this->def,data);
     this->arr[4]=new display_result("4. display results\n", this->def,data);
     this->arr[5]=new download_results("5. download results \n", this->def,data);
-    this->arr[6]=new exit_command("8. exit\n", this->def,data);
+    this->arr[6]=new exit_command("8. exit", this->def,data);
 }
 
 bool CLI::checkValidationCommand(int choice) {

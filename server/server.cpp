@@ -57,7 +57,7 @@ int main(int argc,char* argv[]) {
         DefaultIO *def = new SocketIO(client_sock);
         //DefaultIO *def = new StandardIO();
         //string massage = def->read();
-        CLI cli = CLI(5,def);
+        CLI cli = CLI(def);
         cli.start();
     }
 }

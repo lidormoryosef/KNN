@@ -17,12 +17,12 @@ void algorithm_settings::execute() {
     size_t index;
     if (!input.empty()) {
         if ((index = input.find(' ')) == string::npos){
-            this->dio->write("invalid value for metric");
+            string s = isValidForK(input);
+            s.append("invalid value for metric");
+            this->dio->write(s);
             this->dio->read();
             return;
         }
-        //stringstream str(input);
-        //getline(str, update, ' ');
         update = input.substr(0,index);
         input = input.substr(index+1);
         try{
@@ -31,26 +31,25 @@ void algorithm_settings::execute() {
         catch (exception &e){
             this->dio->write("invalid value for K");
             this->dio->read();
+            if(whatDistance(input)==ERROR)
+            {
+                this->dio->write("invalid value for metric");
+                this->dio->read();
+            }
             return;
         }
         if ((index = input.find(' ')) != string::npos) {
-            index = input.find(' ');
+            //index = input.find(' ');
             update = input.substr(0,index);
             input= input.substr(index+1);
+
         }
         else{
             update= input;
             input = input.substr(3);
 
         }
-        //getline(str, update, ' ');
-        //index = input.find(' ');
-        //update = input.substr(0, index);
-        //string tempName = update;
         distances dis = whatDistance(update);
-        //update="";
-        //input = input.substr(index+4);
-        //getline(str, update, ' ');
         Distance *tempDis;
         tempDis = GetDistanceFun(dis);
         if (tempDis == nullptr) {
@@ -68,9 +67,11 @@ void algorithm_settings::execute() {
             this->dio->read();
             return;
         }
-        dio->write("");
-        dio->read();
+
     }
+    dio->write("");
+    dio->read();
+
 }
 
 algorithm_settings::algorithm_settings(string des, DefaultIO* dio,global_data *data) {
@@ -81,4 +82,16 @@ algorithm_settings::algorithm_settings(string des, DefaultIO* dio,global_data *d
 
 bool algorithm_settings::getFlag() {
     return flag;
+}
+
+string algorithm_settings::isValidForK(string wrong) {
+    int tempK;
+    try{
+        tempK = stoi(wrong);
+        return  "";
+    }
+    catch (exception &e){
+        return "invalid value for K\n";
+
+    }
 }

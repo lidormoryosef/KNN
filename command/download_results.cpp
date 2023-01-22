@@ -6,14 +6,15 @@
 
 void download_results::execute() {
     int size = this->data->getUnClassified().size();
-    for (int i = 0; i <size ; ++i) {
-        string message = "";
+    string message = "";
+    for (int i = 0; i <size ; i++) {
         message = message.append(to_string(i+1));
         message = message.append("\t");
         message = message.append(this->data->getUnClassified().data()->GetName());
         message = message.append("\n");
-        dio->write(message);
     }
+    dio->write(message);
+    dio->read();
 }
 download_results::download_results(string des, DefaultIO* dio,global_data* data) {
     this->description=std::move(des);

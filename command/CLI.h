@@ -18,13 +18,13 @@
 class CLI {
 private:
     Command* arr[7]{nullptr};
-    int client_sock;
+    //int client_sock;
     DefaultIO* def;
     void populateArr();
     //global_data data;
 public:
     //global_data getData ();
-    CLI(int client_sock,DefaultIO* def);
+    CLI(DefaultIO* def);
     void start();
     bool checkValidationCommand(int choice);
 };
