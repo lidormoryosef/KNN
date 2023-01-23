@@ -6,23 +6,25 @@
 #include "SocketIO.h"
 
 string SocketIO::read() {
-    char buffer[4096] = {0};
-    int expected_data_len = sizeof(buffer);
     ssize_t read_bytes;
-    string s;
-    do {
+    string s,temp;
+    while (temp.find('$')==string::npos)
+    {
+        char buffer[4096] = {0};
+        int expected_data_len = sizeof(buffer);
         read_bytes = recv(client_sock, buffer, expected_data_len, 0);
+        temp = buffer;
         if (read_bytes == 0) {
             close(client_sock);
             break;
         }
-            if (read_bytes < 0) {
+        if (read_bytes < 0) {
             close(client_sock);
             break;
         }
-        s.append(buffer);
-
-    } while (buffer[read_bytes-1]!='$');
+        temp=temp.substr(0, expected_data_len);
+        s.append(temp);
+    }
     return s.substr(0,s.size()-1);
 }
 SocketIO::SocketIO(int client_sock) {
@@ -30,11 +32,20 @@ SocketIO::SocketIO(int client_sock) {
 }
 
 void SocketIO::write(string str) {
+    string temp;
     str.append("$");
-    const char* toSend=str.c_str();
-    int sent_bytes = send(client_sock,toSend, str.size(), 0);
+    while (str.size()>4095) {
+        temp = str.substr(0,4095);
+        str= str.substr(4095);
+        int sent_bytes = send(client_sock, &(temp[0]), temp.size(), 0);
+        if (sent_bytes < 0) {
+            perror("error sending to client");
+        }
+    }
+    int sent_bytes = send(client_sock, &(str[0]), str.size(), 0);
     if (sent_bytes < 0) {
         perror("error sending to client");
     }
+
 
 }

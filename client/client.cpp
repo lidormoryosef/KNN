@@ -8,8 +8,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fstream>
-#include "IO/SocketIO.h"
-#include "IO/StandardIO.h"
+#include "../IO/SocketIO.h"
+#include "../IO/StandardIO.h"
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
@@ -46,17 +46,28 @@ int main(int argc,char* argv[]) {
         perror("error connecting to server");
         return 0;
     }
+    bool classify = false;
     while (true) {
         DefaultIO *dio=new SocketIO(sock);
         DefaultIO *local=new StandardIO();
         string choice,path,file,temp,params;
+        size_t loop=0;
         int pick;
         fstream fin;
-        local->write(dio->read());
+        string menu;
+        menu = dio->read();
+        //dio->write("");
+        local->write(menu);
         //dio->write("");
         //dio->read();
         choice=local->read();
         //dio->write("");
+        while (choice.empty()){
+            local->write("invalid choice, try again.");
+            local->write(menu);
+            choice=local->read();
+        }
+
         if(IsValidK(choice)){
             pick=stoi(choice);
             dio->write(choice);
@@ -84,12 +95,13 @@ int main(int argc,char* argv[]) {
                     file.clear();
                     fin.open(path, ios::in);
                     if (!fin) {
-                        cout << "invalid path!" << endl;
+                        local->write("invalid path!");
                         dio->write("");
                         continue;
                     }
                     while (getline(fin, temp)) {
                         file.append(temp);
+                        file.append("\n");
                     }
                     dio->write(file);
                     local->write(dio->read());
@@ -106,7 +118,10 @@ int main(int argc,char* argv[]) {
                     dio->write("");
                     break;
                 case 3:
-                    local->write(dio->read());
+                    params = dio->read();
+                    if (params != "your k is invalid!")
+                        classify = true;
+                    local->write(params);
                     dio->write("");
                     break;
                 case 4:
@@ -114,13 +129,21 @@ int main(int argc,char* argv[]) {
                     dio->write("");
                     break;
                 case 5:
-                    path = local->read();
-                    fin.open(path, ios::out);
-                    if (!fin) {
-                        cout << "invalid path!" << endl;
+                    if(classify) {
+                        path = local->read();
+                        fin.open(path, ios::out);
+                        if (!fin) {
+                            local->write("invalid path!");
+                            continue;
+                        }
+                        fin << dio->read();
+                        dio->write("");
+                        fin.close();
+                    }else{
+                        local->write(dio->read());
+                        dio->write("");
                     }
-                    fin << dio->read();
-                    fin.close();
+
                     break;
                 default:
                     break;

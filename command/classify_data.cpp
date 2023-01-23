@@ -5,7 +5,7 @@
 
 #include <utility>
 void classify_data::execute() {
-    int size = this->data->getUnClassified().size();
+    int size = this->data->getClassified().GetVectors().size();
     if (size< this->data->getK()) {
         dio->write("your k is invalid!");
         dio->read();
@@ -13,6 +13,7 @@ void classify_data::execute() {
     }
 
     vector<NameVector> temp=this->data->getUnClassified();
+    size = this->data->getUnClassified().size();
     for (int i = 0; i <size ; ++i) {
         vector<double> vv = this->data->getUnClassified().at(i).GetVector();
         try {

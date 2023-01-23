@@ -35,16 +35,22 @@ void CLI::start() {
             }
             break;
         }
-        if (checkValidationCommand(choice))
-            arr[choice]->execute();
-        else{
-            if (!arr[1]->getFlag())
-                this->def->write("please upload data");
-            else
-                this->def->write("please classify the data");
-            def->read();
-            continue;
+        if(choice>0&&choice<6) {
+            if (checkValidationCommand(choice)) {
+                arr[choice]->execute();
+            }else {
+                if (!arr[1]->getFlag())
+                    this->def->write("please upload data");
+                else
+                    this->def->write("please classify the data");
+                def->read();
+                continue;
 
+            }
+        }else
+        {
+            this->def->write("invalid choice, try again.");
+            this->def->read();
         }
 
 
