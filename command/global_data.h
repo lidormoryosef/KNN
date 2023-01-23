@@ -8,7 +8,9 @@
 
 #include "../server/ClassifiedArray.h"
 #include "../server/EuclideanDistance.h"
-
+/**
+ * this class containing the all data of program.
+ */
 class global_data {
 private:
     int k;

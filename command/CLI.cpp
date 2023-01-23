@@ -4,7 +4,9 @@
 
 #include "CLI.h"
 #include "../server/Tools.h"
-
+/**
+ * run the program.
+ */
 void CLI::start() {
     while (true) {
         string massage = "";
@@ -57,13 +59,18 @@ void CLI::start() {
     }
 
 }
-
+/**
+ * constructor.
+ * @param def object that responsible the communication between the server and the client.
+ */
 CLI::CLI( DefaultIO *def) {
   //  this->client_sock=client_sock;
     this->def=def;
     populateArr();
 }
-
+/**
+ * populating the array of commands.
+ */
 void CLI::populateArr() {
     global_data *data = new global_data();
     this->arr[1]=new upload_unclassified("1. upload an unclassified csv data file\n", this->def,data);
@@ -73,7 +80,11 @@ void CLI::populateArr() {
     this->arr[5]=new download_results("5. download results \n", this->def,data);
     this->arr[6]=new exit_command("8. exit", this->def,data);
 }
-
+/**
+ * verifies the correctness of the program.
+ * @param choice , the choice of client.
+ * @return
+ */
 bool CLI::checkValidationCommand(int choice) {
     if(choice==3)
         return arr[1]->getFlag();
@@ -81,7 +92,3 @@ bool CLI::checkValidationCommand(int choice) {
         return arr[3]->getFlag();
     return true;
 }
-
-//global_data CLI::getData() {
-  //  return this->data;
-//}

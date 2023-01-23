@@ -4,6 +4,9 @@
 #include "classify_data.h"
 
 #include <utility>
+/**
+ * this function execute option 3 in the menu.
+ */
 void classify_data::execute() {
     int size = this->data->getClassified().GetVectors().size();
     if (size< this->data->getK()) {

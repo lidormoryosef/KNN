@@ -35,6 +35,7 @@ int main(int argc,char* argv[]) {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");
+        return 0;
     }
     struct sockaddr_in sin;
     memset(&sin, 0, sizeof(sin));

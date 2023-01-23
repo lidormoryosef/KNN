@@ -6,6 +6,9 @@
 #define EX_4_DISPLAY_RESULT_H
 
 #include "Command.h"
+/**
+ * this class send the classified data to client.
+ */
 class display_result: public Command{
 public:
     display_result(string des, DefaultIO* dio,global_data *data);

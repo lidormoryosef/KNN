@@ -6,6 +6,9 @@
 #define EX_4_DOWNLOAD_RESULTS_H
 
 #include "Command.h"
+/**
+ * this class send the classified data to client.
+ */
 class download_results: public Command{
 public:
     download_results(string des, DefaultIO* dio,global_data* data);

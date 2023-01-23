@@ -4,7 +4,9 @@
 
 #ifndef EX_4_CLI_H
 #define EX_4_CLI_H
-
+/**
+ * this class response for program run.
+ */
 
 #include "Command.h"
 #include "exit_command.h"

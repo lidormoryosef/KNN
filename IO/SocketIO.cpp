@@ -4,7 +4,10 @@
 
 #include <iostream>
 #include "SocketIO.h"
-
+/**
+ * receiving massage from the client.
+ * @return
+ */
 string SocketIO::read() {
     ssize_t read_bytes;
     string s,temp;
@@ -27,10 +30,17 @@ string SocketIO::read() {
     }
     return s.substr(0,s.size()-1);
 }
+/**
+ * constructor.
+ * @param client_sock client socket.
+ */
 SocketIO::SocketIO(int client_sock) {
     this->client_sock=client_sock;
 }
-
+/**
+ * sending data to client.
+ * @param str
+ */
 void SocketIO::write(string str) {
     string temp;
     str.append("$");

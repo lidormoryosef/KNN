@@ -13,7 +13,9 @@
 #include <cstring>
 #include <iostream>
 #include <csignal>
-
+/**
+ * responsible for the interface between the client and the server by socket.
+ */
 class SocketIO: public DefaultIO{
 private:
     int client_sock;

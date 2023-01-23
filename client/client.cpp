@@ -8,8 +8,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fstream>
-#include "IO/SocketIO.h"
-#include "IO/StandardIO.h"
+#include "../IO/SocketIO.h"
+#include "../IO/StandardIO.h"
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
@@ -165,26 +165,6 @@ int main(int argc,char* argv[]) {
         }
 
         }
-//        char buffer[4096]= {0};
-//        int expected_data_len = sizeof(buffer);
-//        if (answer) {
-//            int read_bytes = recv(sock, buffer, expected_data_len, 0);
-//            if (read_bytes == 0) {
-//                cout<<"connection is closed"<<endl;
-//                break;
-//
-//
-//            } else if (read_bytes < 0) {
-//                cout<<"error has occurred"<<endl;
-//                break;
-//            } else {
-//                cout << buffer<<endl;
-//            }
-//        } else {
-//            break;
-//        }
-//    }
-//        close(sock);
         return 0;
     }
 /**
@@ -210,6 +190,11 @@ int checkValidPort (const string& s){
 bool wantToContinue(const string& s){
     return !(s=="-1");
 }
+/**
+ * check if k is number.
+ * @param s , the string we wont to check.
+ * @return true if s is number.
+ */
 bool IsValidK(const string& s){
     for(char i : s){
         if(!isdigit(i))

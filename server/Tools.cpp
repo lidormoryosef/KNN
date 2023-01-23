@@ -125,7 +125,7 @@ Distance* GetDistanceFun(distances dis) {
 /**
  * check if k is number.
  * @param s , the string we wont to check.
- * @return
+ * @return true if s is number.
  */
 bool IsValidK(const string& s){
     if(s.empty())

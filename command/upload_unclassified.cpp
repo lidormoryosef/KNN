@@ -2,6 +2,9 @@
 // Created by lidor on 1/17/23.
 //
 #include "upload_unclassified.h"
+/**
+ * this function execute option 1 in the menu.
+ */
 void upload_unclassified::execute() {
     dio->write("Please upload your local train CSV file.");
     //dio->read();
@@ -30,28 +33,49 @@ void upload_unclassified::execute() {
     dio->write("Upload complete.");
     dio->read();
 }
-
+/**
+ * constructor.
+ * @param des, the description of class.
+ * @param dio , object that responsible the communication between the server and the client.
+ * @param data , the data of program.
+ */
 upload_unclassified::upload_unclassified(string des, DefaultIO* dio,global_data* data) {
     this->description=std::move(des);
     this->dio=dio;
     this->data=data;
 }
-
+/**
+ * getter.
+ * @return this flag response for program integrity
+ */
 bool upload_unclassified::getFlag() {
     return flag;
 }
-
+/**
+ * populates the entire folder with data structures.
+ * @param str the contents of the file.
+ * @return , data structures.
+ */
 ClassifiedArray upload_unclassified::populateTheClassified(string str) {
     ClassifiedArray array=ClassifiedArray();
     array.setVectors(PopulateVectorClassified(str));
     return array;
 }
-
+/**
+ * populates the entire folder with data structures.
+ * @param str the contents of the file.
+ * @return , data structures.
+ */
 vector<NameVector> upload_unclassified::populateTheUnClassified(string str) {
     ClassifiedArray array=ClassifiedArray();
     array.setVectors(PopulateVectorUnClassified(str));
     return array.GetVectors();
 }
+/**
+ * populates the entire folder with data structures.
+ * @param str the contents of the file.
+ * @return , data structures.
+ */
 vector<NameVector> upload_unclassified::PopulateVectorClassified(string& line)  {
     string temp,curr;
     vector<NameVector> vectors;
@@ -90,7 +114,11 @@ vector<NameVector> upload_unclassified::PopulateVectorClassified(string& line)  
     flag=true;
     return vectors;
 }
-
+/**
+ * populates the entire folder with data structures.
+ * @param str the contents of the file.
+ * @return , data structures.
+ */
 vector<NameVector> upload_unclassified::PopulateVectorUnClassified(string& line)  {
     string temp,curr;
     vector<NameVector> vectors;
@@ -140,40 +168,4 @@ vector<NameVector> upload_unclassified::PopulateVectorUnClassified(string& line)
     }
     flag=true;
     return vectors;
-
-//    string temp,curr;
-//    vector<NameVector> vectors;
-//    stringstream dev(line);
-//    while(getline(dev,curr,'\n')) {
-//        stringstream s(curr);
-//        vector<double> vec;
-//        while (getline(s, temp, ',')) {
-//            try {
-//                vec.push_back(IsValidDouble(temp));
-//            }catch (invalid_argument &e) {
-//                dio->write("the vectors are invalid");
-//                flag=false;
-//                return vectors;
-//            }
-//        }
-//            NameVector v = NameVector("", vec);
-//            if (vectors.empty()) {
-//                if (!ValidVectors(data->getClassified().GetVectors().at(0).GetVector(), vec)) {
-//                    dio->write("the vectors arent in the same size");
-//                    flag=false;
-//                    return vectors;
-//                }
-//                vectors.push_back(v);
-//            } else {
-//                if (ValidVectors(vectors.at(0).GetVector(), vec)) {
-//                    vectors.push_back(v);
-//                } else {
-//                    dio->write("the vectors arent in the same size");
-//                    flag=false;
-//                    return vectors;
-//                }
-//            }
-//        }
-//    flag=true;
-//    return vectors;
     }

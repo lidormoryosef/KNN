@@ -7,6 +7,10 @@
 #include "../server/Tools.h"
 #include "Command.h"
 #include "algorithm"
+#include "../server/Distance.h"
+/**
+ * this class response for classification of data.
+ */
 class classify_data: public Command{
 public:
     void PopulateDistance(const vector<double>& compare);

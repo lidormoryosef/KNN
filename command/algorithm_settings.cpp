@@ -4,7 +4,9 @@
 
 #include <sstream>
 #include "algorithm_settings.h"
-
+/**
+ * this function execute option 2 in the menu.
+ */
 void algorithm_settings::execute() {
     string message = "", input , update;
     int tempK = this->data->getK();
@@ -73,17 +75,29 @@ void algorithm_settings::execute() {
     dio->read();
 
 }
-
+/**
+ * constructor.
+ * @param des, the description of class.
+ * @param dio , object that responsible the communication between the server and the client.
+ * @param data , the data of program.
+ */
 algorithm_settings::algorithm_settings(string des, DefaultIO* dio,global_data *data) {
     this->description=std::move(des);
     this->dio=dio;
     this->data = data;
 }
-
+/**
+ * getter.
+ * @return this flag response for program integrity
+ */
 bool algorithm_settings::getFlag() {
     return flag;
 }
-
+/**
+ * check if k is validly
+ * @param wrong ,k
+ * @return massage if the k invalid.
+ */
 string algorithm_settings::isValidForK(string wrong) {
     int tempK;
     try{
