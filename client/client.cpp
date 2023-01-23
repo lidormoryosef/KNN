@@ -8,8 +8,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fstream>
-#include "../IO/SocketIO.h"
-#include "../IO/StandardIO.h"
+#include "IO/SocketIO.h"
+#include "IO/StandardIO.h"
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
@@ -145,7 +145,12 @@ int main(int argc,char* argv[]) {
                     }
 
                     break;
+                case 8:
+                    break;
+
                 default:
+                    local->write(dio->read());
+                    dio->write("");
                     break;
             }
             if(pick==8){
