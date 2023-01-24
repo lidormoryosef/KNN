@@ -4,7 +4,8 @@ First the branch to check is the main branch.
 
 In our fourth assignment we were asked to expend our communucation so we can now work with a number of clients and offer them 5 different 
 services, we did that by ????classify a given vector from the client based on the machine learning method: KNN.
-## The services our server provides are presented in a menu, where are client needs to choose between 6 choices:
+ The services our server provides are presented in a menu, where are client needs to choose between 6 choices.
+## The choices are:
 
   1.First option is to upload data, both classified and unclassified, and the server recieves it.
   2.Second option is to give the client the option to change the parameters on which his data would be sorted. He can
@@ -15,8 +16,7 @@ services, we did that by ????classify a given vector from the client based on th
   5.Fifth option is similiar to the fourth option, except that now we open a local file for the client and the results will be printed in
   that set file.
   
-  ##### Notice that option 3 cant happen if option 1 didnt already occur(what data would we classify?), and option 4,5 cant occur if option 3
-  didnt occur(we havent classified are data yet).
+  ##### Notice that option 3 cant happen if option 1 didnt already occur(what data would we classify?), and option 4,5 cant occur if option 3 didnt occur(we havent       classified are data yet).
 
 ## KNN algorithm:
 In order to teach the machine about certain data type,for example a cat, we will first need to classify a lot of images "by hand"(i.e by man)
