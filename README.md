@@ -8,11 +8,15 @@ services, we did that by ????classify a given vector from the client based on th
 ## The choices are:
 
   1.First option is to upload data, both classified and unclassified, and the server recieves it.
+  
   2.Second option is to give the client the option to change the parameters on which his data would be sorted. He can
   choose not to change the parameters and in that case the distance and K the KNN algorithm will recieve is euclidean distance and 5.
+  
   3.Third option is to classify the data provided by the client.
+  
   4.Fourth option is to send the client the classification for each vector he asked us to classify( the vectors that are in the
   unclassified data) for him to print him to it to his screen.
+  
   5.Fifth option is similiar to the fourth option, except that now we open a local file for the client and the results will be printed in
   that set file.
   
