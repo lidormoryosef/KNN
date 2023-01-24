@@ -15,20 +15,14 @@ using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
 bool IsValidK(const string& s);
-void writeToFile(int sock){
+void writeToFile(int sock,string path, string str){
     fstream fin;
-    string path;
     StandardIO local=StandardIO();
     SocketIO dio=SocketIO(sock);
-    path = local.read();
     fin.open(path, ios::out);
-    if (!fin) {
-        local.write("invalid path!");
-        return;
-    }
-    fin << dio.read();
-    dio.write("");
+    fin << str;
     fin.close();
+    dio.write("");
 }
 /**
  * this function response the connection between the client and the server.
@@ -148,7 +142,15 @@ int main(int argc,char* argv[]) {
                     break;
                 case 5:
                     if(classify) {
-                        thread thr(writeToFile,sock);
+                        path = local->read();
+                        str = dio->read();
+                        fin.open(path, ios::out);
+                        if (!fin) {
+                            local->write("invalid path!");
+                            break;
+                        }
+                        fin.close();
+                        thread thr(writeToFile,sock,path,str);
                         thr.detach();
                     }else{
                         local->write(dio->read());
@@ -176,26 +178,6 @@ int main(int argc,char* argv[]) {
         }
 
         }
-//        char buffer[4096]= {0};
-//        int expected_data_len = sizeof(buffer);
-//        if (answer) {
-//            int read_bytes = recv(sock, buffer, expected_data_len, 0);
-//            if (read_bytes == 0) {
-//                cout<<"connection is closed"<<endl;
-//                break;
-//
-//
-//            } else if (read_bytes < 0) {
-//                cout<<"error has occurred"<<endl;
-//                break;
-//            } else {
-//                cout << buffer<<endl;
-//            }
-//        } else {
-//            break;
-//        }
-//    }
-//        close(sock);
         return 0;
     }
 /**
