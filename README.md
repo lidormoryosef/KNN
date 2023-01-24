@@ -1,15 +1,22 @@
-#ex_4
+# ex_4
+
 First the branch to check is the main branch.
 
 In our fourth assignment we were asked to expend our communucation so we can now work with a number of clients and offer them 5 different 
 services, we did that by ????classify a given vector from the client based on the machine learning method: KNN.
-The services our server provides are presented in a menu, where are client needs to choose between 6 choices:
+## The services our server provides are presented in a menu, where are client needs to choose between 6 choices:
 
   1.First option is to upload data, both classified and unclassified, and the server recieves it.
   2.Second option is to give the client the option to change the parameters on which his data would be sorted. He can
   choose not to change the parameters and in that case the distance and K the KNN algorithm will recieve is euclidean distance and 5.
-  3.Third option is to classify the data provided by the client. Notice that option 3 can occur only if option 1 already happened.
-  4.Fourth
+  3.Third option is to classify the data provided by the client.
+  4.Fourth option is to send the client the classification for each vector he asked us to classify( the vectors that are in the
+  unclassified data) for him to print him to it to his screen.
+  5.Fifth option is similiar to the fourth option, except that now we open a local file for the client and the results will be printed in
+  that set file.
+  
+  ##### Notice that option 3 cant happen if option 1 didnt already occur(what data would we classify?), and option 4,5 cant occur if option 3
+  didnt occur(we havent classified are data yet).
 
 ## KNN algorithm:
 In order to teach the machine about certain data type,for example a cat, we will first need to classify a lot of images "by hand"(i.e by man)
