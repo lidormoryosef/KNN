@@ -8,17 +8,17 @@ services, each client was assigned a thread that would be at his service for any
  The services our server provides are presented in a menu, where are client needs to choose between 6 choices.
 ## The choices are:
 
-  -1. First option is to upload data, both classified and unclassified, and the server recieves it.
+  - 1. First option is to upload data, both classified and unclassified, and the server recieves it.
   
-  -2. Second option is to give the client the option to change the parameters on which his data would be sorted. He can
+  - 2. Second option is to give the client the option to change the parameters on which his data would be sorted. He can
   choose not to change the parameters and in that case the distance and K the KNN algorithm will recieve is euclidean distance and 5.
   
-  -3. Third option is to classify the data provided by the client, using the machine learning method:KNN.
+  - 3. Third option is to classify the data provided by the client, using the machine learning method:KNN.
   
-  -4. Fourth option is to send the client the classification for each vector he asked us to classify( the vectors that are in the
+  - 4. Fourth option is to send the client the classification for each vector he asked us to classify( the vectors that are in the
   unclassified data) for him to print him to it to his screen.
   
-  -5. Fifth option is similiar to the fourth option, except that now we open a local file for the client and the results will be printed in
+  - 5. Fifth option is similiar to the fourth option, except that now we open a local file for the client and the results will be printed in
   that set file.
   
   ##### Notice that option 3 cant happen if option 1 didnt already occur(what data would we classify?), and option 4,5 cant occur if option 3 didnt occur(we havent       classified are data yet).
