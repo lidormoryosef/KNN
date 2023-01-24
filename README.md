@@ -21,7 +21,7 @@ services, each client was assigned a thread that would be at his service for any
   - 5. Fifth option is similiar to the fourth option, except that now we open a local file for the client and the results will be printed in
   that set file.
   
-  ##### Notice that option 3 cant happen if option 1 didnt already occur(what data would we classify?), and option 4,5 cant occur if option 3 didnt occur(we havent       classified are data yet).
+  ##### Notice that option 3 cant happen if option 1 didnt already occur(what data would we classified?), and option 4,5 cant occur if option 3 didnt occur(we havent       classified are data yet).
   
   ##### Notice that our program works with Unix files so before uploading the files download the program dos2unix and open a terminal in the files folder
   and write "dos2unix file" (where file is the file we want to convert).
