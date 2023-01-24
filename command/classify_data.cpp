@@ -49,9 +49,11 @@ void classify_data::PopulateDistance(const vector<double>& compare) {
     ClassifiedArray temp=this->data->getClassified();
     vector<NameVector> v=temp.GetVectors();
     int size = this->data->getClassified().GetVectors().size();
+    vector<NameVector> vectors = this->data->getClassified().GetVectors();
+    Distance *norm =  this->data->getNorm();
     if(ValidVectors(compare, this->data->getClassified().GetVectors().at(0).GetVector())) {
         for (int i = 0; i < size; ++i) {
-            double dis = this->data->getNorm()->distance(this->data->getClassified().GetVectors().at(i).GetVector(),compare);
+            double dis = norm->distance(vectors.at(i).GetVector(),compare);
             v.at(i).SetDistanceFromVector(dis);
         }
     }

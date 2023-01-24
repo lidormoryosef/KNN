@@ -22,8 +22,10 @@ void upload_unclassified::execute() {
     this->data->setClassified(vectorWithClassification);
     dio->write("Please upload your local test CSV file.");
     str=dio->read();
-    if (str.empty())
-        return ;
+    if (str.empty()) {
+        this->flag= false;
+        return;
+    }
     vectorWithoutClassification=populateTheUnClassified(str);
     if(!flag) {
         data->setClassified(temp);

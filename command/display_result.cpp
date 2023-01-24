@@ -15,7 +15,7 @@ void display_result::execute() {
         message = message.append(this->data->getUnClassified().at(i).GetName());
         message = message.append("\n");
     }
-    message = message.append("Done.\n");
+    message = message.append("Done.");
     dio->write(message);
     dio->read();
 }
