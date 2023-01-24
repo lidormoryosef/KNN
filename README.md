@@ -23,8 +23,7 @@ services, each client was assigned a thread that would be at his service for any
   
   ##### Notice that option 3 cant happen if option 1 didnt already occur(what data would we classified?), and option 4,5 cant occur if option 3 didnt occur(we havent       classified are data yet).
   
-  ##### Notice that our program works with Unix files so before uploading the files download the program dos2unix and open a terminal in the files folder
-  and write "dos2unix file" (where file is the file we want to convert).
+  ##### Notice that our program works with Unix files so before uploading the files download the program dos2unix and open a terminal in the files folder and write "dos2unix file" (where file is the file we want to convert).
 
 ## KNN algorithm:
 In order to teach the machine about certain data type,for example a cat, we will first need to classify a lot of images "by hand"(i.e by man)
