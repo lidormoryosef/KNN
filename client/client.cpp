@@ -10,10 +10,26 @@
 #include <fstream>
 #include "../IO/SocketIO.h"
 #include "../IO/StandardIO.h"
+#include <thread>
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
 bool IsValidK(const string& s);
+void writeToFile(int sock){
+    fstream fin;
+    string path;
+    StandardIO local=StandardIO();
+    SocketIO dio=SocketIO(sock);
+    path = local.read();
+    fin.open(path, ios::out);
+    if (!fin) {
+        local.write("invalid path!");
+        return;
+    }
+    fin << dio.read();
+    dio.write("");
+    fin.close();
+}
 /**
  * this function response the connection between the client and the server.
  * @param argc , number of arguments.
@@ -132,15 +148,8 @@ int main(int argc,char* argv[]) {
                     break;
                 case 5:
                     if(classify) {
-                        path = local->read();
-                        fin.open(path, ios::out);
-                        if (!fin) {
-                            local->write("invalid path!");
-                            continue;
-                        }
-                        fin << dio->read();
-                        dio->write("");
-                        fin.close();
+                        thread thr(writeToFile,sock);
+                        thr.detach();
                     }else{
                         local->write(dio->read());
                         dio->write("");
