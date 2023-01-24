@@ -8,7 +8,7 @@
 #include "Tools.h"
 #include "ClassifiedArray.h"
 #include "../IO/DefaultIO.h"
-
+#include <thread>
 #include "../command/CLI.h"
 #include "../IO/StandardIO.h"
 #include "../IO/SocketIO.h"
@@ -22,6 +22,11 @@ using namespace std;
  * @param argv , array of arguments.
  * @return
  */
+ void run_main(int client_sock){
+    DefaultIO *def = new SocketIO(client_sock);
+    CLI cli = CLI(def);
+    cli.start();
+ }
 int main(int argc,char* argv[]) {
     if(argc!=2){
         cout<<"the number of arguments passed is invalid"<<endl;
@@ -55,10 +60,11 @@ int main(int argc,char* argv[]) {
         if (client_sock < 0) {
             perror("error accepting client");
         }
-        DefaultIO *def = new SocketIO(client_sock);
+        //DefaultIO *def = new SocketIO(client_sock);
         //DefaultIO *def = new StandardIO();
         //string massage = def->read();
-        CLI cli = CLI(def);
-        cli.start();
+        //CLI cli = CLI(def);
+        thread clientThread(run_main,client_sock);
+        clientThread.detach();
     }
 }

@@ -8,8 +8,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fstream>
-#include "IO/SocketIO.h"
-#include "IO/StandardIO.h"
+#include "../IO/SocketIO.h"
+#include "../IO/StandardIO.h"
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
