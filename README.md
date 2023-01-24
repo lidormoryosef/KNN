@@ -16,7 +16,7 @@ services, each client was assigned a thread that would be at his service for any
   - 3. Third option is to classify the data provided by the client, using the machine learning method:KNN.
   
   - 4. Fourth option is to send the client the classification for each vector he asked us to classify( the vectors that are in the
-  unclassified data) for him to print him to it to his screen.
+  unclassified data) for him to print it to his screen.
   
   - 5. Fifth option is similiar to the fourth option, except that now we open a local file for the client and the results will be printed in
   that set file.
