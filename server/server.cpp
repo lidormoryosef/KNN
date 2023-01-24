@@ -8,9 +8,10 @@
 #include "Tools.h"
 #include "ClassifiedArray.h"
 #include "../IO/DefaultIO.h"
-
+#include <thread>
 #include "../command/CLI.h"
 #include "../IO/StandardIO.h"
+#include "../IO/SocketIO.h"
 //
 // Created by lidor on 12/26/22.
 //
@@ -21,6 +22,11 @@ using namespace std;
  * @param argv , array of arguments.
  * @return
  */
+ void run_main(int client_sock){
+    DefaultIO *def = new SocketIO(client_sock);
+    CLI cli = CLI(def);
+    cli.start();
+ }
 int main(int argc,char* argv[]) {
     if(argc!=2){
         cout<<"the number of arguments passed is invalid"<<endl;
@@ -34,6 +40,7 @@ int main(int argc,char* argv[]) {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");
+        return 0;
     }
     struct sockaddr_in sin;
     memset(&sin, 0, sizeof(sin));
@@ -49,14 +56,15 @@ int main(int argc,char* argv[]) {
     struct sockaddr_in client_sin;
     unsigned int addr_len = sizeof(client_sin);
     while (true) {
-        //int client_sock = accept(sock, (struct sockaddr *) &client_sin, &addr_len);
-        //if (client_sock < 0) {
-            //perror("error accepting client");
-        //}
+        int client_sock = accept(sock, (struct sockaddr *) &client_sin, &addr_len);
+        if (client_sock < 0) {
+            perror("error accepting client");
+        }
         //DefaultIO *def = new SocketIO(client_sock);
-        DefaultIO *def = new StandardIO();
+        //DefaultIO *def = new StandardIO();
         //string massage = def->read();
-        CLI cli = CLI(5,def);
-        cli.start();
+        //CLI cli = CLI(def);
+        thread clientThread(run_main,client_sock);
+        clientThread.detach();
     }
 }

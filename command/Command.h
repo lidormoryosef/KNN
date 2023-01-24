@@ -7,7 +7,9 @@
 #include <string>
 #include "../command/global_data.h"
 #include "../IO/DefaultIO.h"
-
+/**
+ * the class from which all commands inherit.
+ */
 using namespace std;
 class Command{
 protected:

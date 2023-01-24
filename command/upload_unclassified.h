@@ -13,18 +13,20 @@
 #include "../server/ClassifiedArray.h"
 #include "../IO/DefaultIO.h"
 #include "global_data.h"
-
+/**
+ * this class responsible for receiving the files.
+ */
 class upload_unclassified: public Command{
 public:
    upload_unclassified(string des,DefaultIO* dio,global_data* data);
     void execute () override;
     bool getFlag() override;
-    ClassifiedArray populateTheClassified();
-    vector<NameVector> populateTheUnClassified();
+    ClassifiedArray populateTheClassified(string str);
+    vector<NameVector> populateTheUnClassified(string str);
 
-    vector<NameVector> PopulateVectorClassified(const string& line);
+    vector<NameVector> PopulateVectorClassified(string& line);
 
-    vector<NameVector> PopulateVectorUnClassified(const string& line);
+    vector<NameVector> PopulateVectorUnClassified(string& line);
 };
 
 

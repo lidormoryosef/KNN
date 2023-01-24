@@ -7,7 +7,9 @@
 
 
 #include "DefaultIO.h"
-
+/**
+ * responsible for the interface between the client and the server by keyboard.
+ */
 class StandardIO: public DefaultIO{
 
 public:

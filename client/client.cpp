@@ -7,10 +7,29 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <string.h>
+#include <fstream>
+#include "../IO/SocketIO.h"
+#include "../IO/StandardIO.h"
+#include <thread>
 using namespace std;
 int checkValidPort (const string& s);
 bool wantToContinue(string s);
+bool IsValidK(const string& s);
+void writeToFile(int sock){
+    fstream fin;
+    string path;
+    StandardIO local=StandardIO();
+    SocketIO dio=SocketIO(sock);
+    path = local.read();
+    fin.open(path, ios::out);
+    if (!fin) {
+        local.write("invalid path!");
+        return;
+    }
+    fin << dio.read();
+    dio.write("");
+    fin.close();
+}
 /**
  * this function response the connection between the client and the server.
  * @param argc , number of arguments.
@@ -18,6 +37,7 @@ bool wantToContinue(string s);
  * @return
  */
 int main(int argc,char* argv[]) {
+    string str;
     if(argc!=3){
         cout<<"the number of arguments passed is invalid"<<endl;
         return 0;
@@ -42,46 +62,140 @@ int main(int argc,char* argv[]) {
         perror("error connecting to server");
         return 0;
     }
+    bool classify = false;
     while (true) {
-        cout << "enter data:" << endl;
-        string input;
-        getline(cin, input);
-        while (input.length()==0)
-        {
-            cout << "invalid input" << endl;
-            cout << "enter data:" << endl;
-            getline(cin, input);
+        DefaultIO *dio=new SocketIO(sock);
+        DefaultIO *local=new StandardIO();
+        string choice,path,file,temp,params;
+        size_t loop=0;
+        int pick;
+        fstream fin;
+        string menu;
+        menu = dio->read();
+        //dio->write("");
+        local->write(menu);
+        //dio->write("");
+        //dio->read();
+        choice=local->read();
+        //dio->write("");
+        while (choice.empty()){
+            local->write("invalid choice, try again.");
+            local->write(menu);
+            choice=local->read();
         }
-        bool answer = wantToContinue(input);
-        char *data_addr = (char*)(input.c_str());
-        int data_len = input.length();
-        data_addr[data_len]='\n';
-        data_len++;
-        int sent_bytes = send(sock, data_addr, data_len, 0);
-        if (sent_bytes < 0) {
-            cout<<"error has occurred"<<endl;
-            exit(0);
-        }
-        char buffer[4096]= {0};
-        int expected_data_len = sizeof(buffer);
-        if (answer) {
-            int read_bytes = recv(sock, buffer, expected_data_len, 0);
-            if (read_bytes == 0) {
-                cout<<"connection is closed"<<endl;
-                break;
 
+        if(IsValidK(choice)){
+            pick=stoi(choice);
+            dio->write(choice);
+            switch(pick) {
+                case 1:
+                    local->write(dio->read());
+                    path = local->read();
+                    fin.open(path, ios::in);
+                    if (!fin) {
+                        cout << "invalid path!" << endl;
+                        dio->write("");
+                        continue;
+                    }
+                    while (getline(fin, temp)) {
+                        file.append(temp);
+                        file.append("\n");
+                    }
+                    dio->write(file);
+                    local->write(dio->read());
+                    dio->write("");
+                    local->write(dio->read());
+                    //dio->write("");
+                    fin.close();
+                    path = local->read();
+                    file.clear();
+                    fin.open(path, ios::in);
+                    if (!fin) {
+                        local->write("invalid path!");
+                        dio->write("");
+                        continue;
+                    }
+                    while (getline(fin, temp)) {
+                        file.append(temp);
+                        file.append("\n");
+                    }
+                    dio->write(file);
+                    local->write(dio->read());
+                    fin.close();
+                    dio->write("");
+                    break;
+                case 2:
+                    local->write(dio->read());
+                    params=local->read();
+                    dio->write(params);
+                    str = dio->read();
+                    if (!str.empty())
+                        local->write(str);
+                    dio->write("");
+                    break;
+                case 3:
+                    params = dio->read();
+                    if (params != "your k is invalid!")
+                        classify = true;
+                    local->write(params);
+                    dio->write("");
+                    break;
+                case 4:
+                    local->write(dio->read());
+                    if (classify)
+                        local->read();
+                    dio->write("");
+                    break;
+                case 5:
+                    if(classify) {
+                        thread thr(writeToFile,sock);
+                        thr.detach();
+                    }else{
+                        local->write(dio->read());
+                        dio->write("");
+                    }
 
-            } else if (read_bytes < 0) {
-                cout<<"error has occurred"<<endl;
-                break;
-            } else {
-                cout << buffer<<endl;
+                    break;
+                case 8:
+                    break;
+
+                default:
+                    local->write(dio->read());
+                    dio->write("");
+                    break;
             }
-        } else {
-            break;
+            if(pick==8){
+                close(sock);
+                break;
+            }
+            }else{
+            dio->write(choice);
+            local->write(dio->read());
+            dio->write("");
+
         }
-    }
-        close(sock);
+
+        }
+//        char buffer[4096]= {0};
+//        int expected_data_len = sizeof(buffer);
+//        if (answer) {
+//            int read_bytes = recv(sock, buffer, expected_data_len, 0);
+//            if (read_bytes == 0) {
+//                cout<<"connection is closed"<<endl;
+//                break;
+//
+//
+//            } else if (read_bytes < 0) {
+//                cout<<"error has occurred"<<endl;
+//                break;
+//            } else {
+//                cout << buffer<<endl;
+//            }
+//        } else {
+//            break;
+//        }
+//    }
+//        close(sock);
         return 0;
     }
 /**
@@ -104,7 +218,14 @@ int checkValidPort (const string& s){
  * @param s , the string of client
  * @return -1 if want to stop  the specified.
  */
-bool wantToContinue(string s){
+bool wantToContinue(const string& s){
     return !(s=="-1");
+}
+bool IsValidK(const string& s){
+    for(char i : s){
+        if(!isdigit(i))
+            return false;
+    }
+    return true;
 }
 

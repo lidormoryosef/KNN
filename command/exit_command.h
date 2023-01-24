@@ -6,6 +6,9 @@
 #define EX_4_EXIT_COMMAND_H
 
 #include "Command.h"
+/**
+ * this class response for free memory and close the socket.
+ */
 class exit_command: public Command{
 public:
     exit_command(string des, DefaultIO* dio,global_data* data);

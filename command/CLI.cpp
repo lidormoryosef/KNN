@@ -4,19 +4,30 @@
 
 #include "CLI.h"
 #include "../server/Tools.h"
-
+/**
+ * run the program.
+ */
 void CLI::start() {
     while (true) {
-        def->write("Welcome to the KNN Classifier Server. Please choose an option:\n");
+        string massage = "";
+        massage.append("Welcome to the KNN Classifier Server. Please choose an option:\n");
         for (int i = 1; i < 7; ++i) {
-            def->write(arr[i]->getDescription());
+            massage.append(arr[i]->getDescription());
         }
+        this->def->write(massage);
+        //def->read();
+        //def->write("");
         int choice;
         string str = def->read();
+        if (str.empty()) {
+            //def->write("");
+            break;
+        }
         if (IsValidK(str)) {
             choice = stoi(str);
         } else {
             this->def->write("invalid choice, try again.");
+            this->def->read();
             continue;
         }
         if (choice==8) {
@@ -26,28 +37,40 @@ void CLI::start() {
             }
             break;
         }
-        if (checkValidationCommand(choice))
-            arr[choice]->execute();
-        else{
-            if (!arr[1]->getFlag())
-                this->def->write("please upload data");
-            else
-                this->def->write("please classify the data");
-            continue;
+        if(choice>0&&choice<6) {
+            if (checkValidationCommand(choice)) {
+                arr[choice]->execute();
+            }else {
+                if (!arr[1]->getFlag())
+                    this->def->write("please upload data");
+                else
+                    this->def->write("please classify the data");
+                def->read();
+                continue;
 
+            }
+        }else
+        {
+            this->def->write("invalid choice, try again.");
+            this->def->read();
         }
 
 
     }
 
 }
-
-CLI::CLI(int client_sock, DefaultIO *def) {
-    this->client_sock=client_sock;
+/**
+ * constructor.
+ * @param def object that responsible the communication between the server and the client.
+ */
+CLI::CLI( DefaultIO *def) {
+  //  this->client_sock=client_sock;
     this->def=def;
     populateArr();
 }
-
+/**
+ * populating the array of commands.
+ */
 void CLI::populateArr() {
     global_data *data = new global_data();
     this->arr[1]=new upload_unclassified("1. upload an unclassified csv data file\n", this->def,data);
@@ -55,9 +78,13 @@ void CLI::populateArr() {
     this->arr[3]=new classify_data("3. classify data\n", this->def,data);
     this->arr[4]=new display_result("4. display results\n", this->def,data);
     this->arr[5]=new download_results("5. download results \n", this->def,data);
-    this->arr[6]=new exit_command("8. exit\n", this->def,data);
+    this->arr[6]=new exit_command("8. exit", this->def,data);
 }
-
+/**
+ * verifies the correctness of the program.
+ * @param choice , the choice of client.
+ * @return
+ */
 bool CLI::checkValidationCommand(int choice) {
     if(choice==3)
         return arr[1]->getFlag();
@@ -65,7 +92,3 @@ bool CLI::checkValidationCommand(int choice) {
         return arr[3]->getFlag();
     return true;
 }
-
-//global_data CLI::getData() {
-  //  return this->data;
-//}

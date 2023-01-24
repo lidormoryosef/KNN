@@ -14,7 +14,7 @@ using namespace std;
  */
 class Distance {
 public:
-    virtual double distance(vector<double> v1, vector<double> v2)=0;
+    virtual double distance(vector<double> v1, const vector<double>& v2)=0;
 };
 
 

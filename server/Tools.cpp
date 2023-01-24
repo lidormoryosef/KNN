@@ -47,15 +47,15 @@ distances whatDistance (const string& dis){
  * @param s the string.
  * @return if the string ia number, return the number, else throw exception.
  */
-double IsValidDouble(const string& s) {
+double IsValidDouble(string s) {
     string message = "the vector is invalid";
     size_t index;
+    double number;
     try {
-    double number = stod(s, &index);
+    number = stod(s, &index);
     if (index < s.size()) {
         throw invalid_argument(message);
     }
-        return number;
     }
     catch (invalid_argument &e){
         throw invalid_argument(message);
@@ -63,6 +63,7 @@ double IsValidDouble(const string& s) {
     catch(out_of_range &e){
         throw invalid_argument(message);
     }
+    return number;
 }
 
 /**
@@ -124,9 +125,11 @@ Distance* GetDistanceFun(distances dis) {
 /**
  * check if k is number.
  * @param s , the string we wont to check.
- * @return
+ * @return true if s is number.
  */
 bool IsValidK(const string& s){
+    if(s.empty())
+        return false;
     for(char i : s){
         if(!isdigit(i))
             return false;
